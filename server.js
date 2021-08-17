@@ -7,9 +7,9 @@ require("dotenv").config();
 const jwt=require("jsonwebtoken");
 const jwksClient=require("jwks-rsa");
 const mongoose=require("mongoose");
-const bookController=require("./controllers/Book.controller")
+const getBooks=require("./controllers/Book.controller")
 const PORT=process.env.PORT
-mongoose.connect('mongodb://localhost:27017/mongoDemo', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/mongoDemo', {useNewUrlParser: true,  useUnifiedTopology: true });
 const client = jwksClient({
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
   });
@@ -29,7 +29,7 @@ app.get('/test',(req,res)=>{
         res.send(user)
     })
 });
-app.get('/book',bookController);
+app.get('/book',getBooks);
 app.listen(PORT,()=>{
     console.log(`listining on port ${PORT} `);
 })
