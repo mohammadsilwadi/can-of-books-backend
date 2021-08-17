@@ -11,7 +11,29 @@ const getBooks=(req,res)=>{
         }
     });
 }
+const createBookController= (req,res)=>{
+    let data={
+        title:req.body["title"],
+        description:req.body["description"],
+        status:req.body["status"],
+        age:req.body["email"]
+    }
+    let newBook= new BookModel(data);
+    newBook.save().then(    
+        res.json({message:"user created succefully",book:newBook})
+    )
+}
 
-module.exports=getBooks
+const deleteBookController=(req,res)=>{
+    let bookId=req.params["id"];
+    BookModel.findByIdAndDelete({_id:bookId},(err,data)=>{
+        if (err){
+            res.send("error occured");
+        }
+        console.log(bookId);
+        res.send("book deleted");
+    })
+}
+module.exports={getBooks,createBookController,deleteBookController}
 
 
