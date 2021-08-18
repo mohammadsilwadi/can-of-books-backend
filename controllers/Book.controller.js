@@ -55,7 +55,6 @@ function deleteBookController(req, res){
     console.log(token);
     let bookId =req.params["id"];
     // add fillter and email
-
     jwt.verify(token, getKey, {}, (err, book) => {
         if (err) {
             res.send("auth failed");
